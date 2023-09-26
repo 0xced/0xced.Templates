@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageType>Template</PackageType>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>0xced's opinionated templates for "dotnet new"</Description>
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
+    <!-- Allow to include .gitignore of templates that should be added to the package content -->
+    <NoDefaultExcludes>true</NoDefaultExcludes>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="templates\**\*" />
+    <Content Remove="templates\**\bin\**" />
+    <Content Remove="templates\**\obj\**" />
+    <Content Remove="templates\.vs\**" />
+    <Content Remove="templates\.idea\**" />
+    <Content Remove="templates\**\*.user" />
+    <Compile Remove="**\*" />
+  </ItemGroup>
+
+</Project>

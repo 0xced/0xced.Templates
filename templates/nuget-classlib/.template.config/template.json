@@ -1,0 +1,99 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "identity": "ch.0xced.nuget-classlib",
+    "author": "Cédric Luthi",
+    "classifications": [
+        "Common",
+        "Library",
+        "NuGet"
+    ],
+    "name": "Class Library publishable on NuGet with GitHub Actions workflow",
+    "tags": {
+        "language": "C#",
+        "type": "solution"
+    },
+    "shortName": "nuget-classlib",
+    "sourceName": "MyLibrary",
+    "preferNameDirectory": true,
+    "sources": [
+        {
+            "exclude": [
+                ".template.config/**/*",
+                "**/bin/**",
+                "**/obj/**",
+                ".vs/**",
+                ".idea/**",
+                "**/*.user"
+            ]
+        }
+    ],
+    "symbols": {
+        "package-description": {
+            "type": "parameter",
+            "datatype": "text",
+            "description": "The description of the NuGet package.",
+            "replaces": "package-description",
+            "isRequired": true
+        },
+        "package-tags": {
+            "type": "parameter",
+            "datatype": "text",
+            "description": "A space-delimited list of tags and keywords that describe the NuGet package.",
+            "replaces": "package-tags",
+            "isRequired": true
+        },
+        "github-organization": {
+            "type": "parameter",
+            "datatype": "text",
+            "description": "The GitHub organization short name used in the repository URL.",
+            "replaces": "myorg",
+            "defaultValue": "0xced"
+        },
+        "author-name": {
+            "type": "parameter",
+            "datatype": "text",
+            "description": "The author name, used in the package authors, copyright and LICENSE file.",
+            "replaces": "John Doe",
+            "defaultValue": "Cédric Luthi"
+        },
+        "project-email": {
+            "type": "parameter",
+            "datatype": "text",
+            "description": "The e-mail of the person responsible for enforcing the code of conduct.",
+            "replaces": "john.doe@gmail.com",
+            "defaultValue": "cedric.luthi@gmail.com"
+        },
+        "copyright-year": {
+            "type": "generated",
+            "generator": "now",
+            "replaces": "2001",
+            "parameters": {
+                "format": "yyyy"
+            }
+        },
+        "guid1":{
+            "type": "generated",
+            "generator": "guid",
+            "replaces": "6F2C5EC9-0D5E-4D36-BC56-450FBD08D8DB",
+            "parameters": {
+                "format":"D"
+            }
+        },
+        "guid2":{
+            "type": "generated",
+            "generator": "guid",
+            "replaces": "75D6D6DB-72E8-4A14-A9BA-779EB8171FEC",
+            "parameters": {
+                "format":"D"
+            }
+        },
+        "guid3":{
+            "type": "generated",
+            "generator": "guid",
+            "replaces": "862A2B67-8CE8-4955-BAC7-CC43BFA5A8F4",
+            "parameters": {
+                "format":"D"
+            }
+        }
+    }
+}
