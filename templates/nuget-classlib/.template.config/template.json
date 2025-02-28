@@ -94,6 +94,14 @@
             "parameters": {
                 "format":"D"
             }
+        },
+        "guid4":{
+            "type": "generated",
+            "generator": "guid",
+            "replaces": "FAB1CDC0-266C-4E9B-BD8B-396EE5903FB0",
+            "parameters": {
+                "format":"D"
+            }
         }
     }
 }

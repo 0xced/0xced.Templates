@@ -4,10 +4,11 @@
 
 ## Installation
 
-To install the templates (or update to the latest stable version), run the following command:
+To install the templates (or update to the latest version), run the following command:
 
 ```sh
-dotnet new --install 0xced.Templates
+git clone https://github.com/0xced/0xced.Templates
+dotnet new install --force 0xced.Templates
 ```
 
 For more information about the `dotnet new` command, see the the official [dotnet new documentation][dotnet-new].
@@ -25,7 +26,7 @@ dotnet new nuget-classlib
 
 ### Class library project
 
-* 🎯 Target .NET 6 which has [Long Term Support][LTS], i.e. is supported for three years after the initial release.
+* 🎯 Target .NET 8 which has [Long Term Support][LTS], i.e. is supported for three years after the initial release.
 * ❔ Enable [nullable reference types][NRT] with `<Nullable>enable</Nullable>` (same as the built-in `classlib` template).
 * ⚠️ [Treat warnings as errors][TWAS], because ignoring warnings leads to bugs, and errors can't be ignored.
 * 🔬 Enable all [.NET source code analysis][CodeAnalysis] rules with `<AnalysisMode>All</AnalysisMode>`.
@@ -62,6 +63,8 @@ dotnet new nuget-classlib
 ### GitHub Actions workflow
 
 The ***Continuous Integration*** workflow runs everytime a commit is pushed to the GitHub repository.
+
+The ***Test Report*** workflow runs after ***Continuous Integration*** in order to produce a comprehensive test report dashboard with the summary of all tests.
 
 A package (nupkg file) is always produced and available in the action artifacts. When the commit has an attached tag, which is required when using [MinVer][MinVer], the package is published on NuGet.
 

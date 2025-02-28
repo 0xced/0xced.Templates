@@ -18,6 +18,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLibrary", "src\MyLibrary.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLibrary.Tests", "tests\MyLibrary.Tests.csproj", "{75D6D6DB-72E8-4A14-A9BA-779EB8171FEC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{FAB1CDC0-266C-4E9B-BD8B-396EE5903FB0}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\continuous-integration.yml = .github\workflows\continuous-integration.yml
+		.github\workflows\test-report.yml = .github\workflows\test-report.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,5 +38,8 @@ Global
 		{75D6D6DB-72E8-4A14-A9BA-779EB8171FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75D6D6DB-72E8-4A14-A9BA-779EB8171FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75D6D6DB-72E8-4A14-A9BA-779EB8171FEC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FAB1CDC0-266C-4E9B-BD8B-396EE5903FB0} = {862A2B67-8CE8-4955-BAC7-CC43BFA5A8F4}
 	EndGlobalSection
 EndGlobal
