@@ -108,9 +108,27 @@ When a tag is attached to the commit, the following steps are performed.
 *	CHANGELOG
 *	Code of Conduct
 
-## Other templates
+## The `spectre-console` template
 
-Currently, the `nuget-classlib` is the only available template. I plan to create another template for scaffolding a [Spectre.Console][SpectreConsole] command line app.
+The Spectre Console template creates a console app powered by the [Spectre.Console.Cli](https://spectreconsole.net/cli/) package.
+
+To create a project from this template, run the following commands:
+
+```sh
+mkdir mycli && cd mycli
+dotnet new spectre-console
+```
+
+This template provides the following features.
+
+* 🔢 Automatic  `--version` support using the [AssemblyInformationalVersion](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assemblyinformationalversionattribute) attribute of the main assembly. The version can be controlled by setting the `<Version>1.2.3</Version>` property in the csproj.
+* 🎛️ A default command with just enough to get started with [settings](https://spectreconsole.net/cli/settings).
+* 📄 Redirection-friendy stdout and stderr. I.e. get nice interactive [spinners](https://spectreconsole.net/live/status) and [progress bars](https://spectreconsole.net/live/progress) while running in a terminal and ignore those when redirected to a file.
+* ⚡️ Cancellable commands with a cancellation token that triggers when Ctrl+C is pressed.
+* 💣 A solid exception handler.
+  * Exits with code 130 when Ctrl+C is pressed, code 64 (EX_USAGE) if the app is used incorrectly, code 70 (EX_SOFTWARE) in case of uncaught exception.
+  * Pretty display of exceptions.
+  * Writes the help page in case the app is misued.
 
 [dotnet-new]: https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new
 [LTS]: https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core

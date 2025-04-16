@@ -1,0 +1,29 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "identity": "ch.0xced.spectre-console",
+    "author": "Cédric Luthi",
+    "classifications": [
+        "Console",
+        "Spectre"
+    ],
+    "name": "Console App powered by Spectre.Console.Cli",
+    "tags": {
+        "language": "C#",
+        "type": "project"
+    },
+    "shortName": "spectre-console",
+    "sourceName": "myapp",
+    "preferNameDirectory": true,
+    "sources": [
+        {
+            "exclude": [
+                ".template.config/**/*",
+                "**/bin/**",
+                "**/obj/**",
+                ".vs/**",
+                ".idea/**",
+                "**/*.user"
+            ]
+        }
+    ]
+}
