@@ -18,6 +18,7 @@
     "sources": [
         {
             "exclude": [
+                "**/.DS_Store",
                 ".template.config/**/*",
                 "**/bin/**",
                 "**/obj/**",
