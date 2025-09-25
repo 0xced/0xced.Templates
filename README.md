@@ -54,49 +54,49 @@ dotnet new nuget-classlib
 * 👩‍🔬 Code coverage with [coverlet][coverlet].
   * Running `dotnet test` automatically runs coverage, displays a summary on your terminal, generates an html report with [ReportGenerator][ReportGenerator] and opens it in your browser.
   * Deterministic report paths, working around [microsoft/vstest/#2378][VsTestIssue2378] (Avoid guid at the end of outputDirectory).
-* ⚔️ Using [xUnit.net][xUnit], the best unit testing tool of the .NET ecosystem.
+* ⚔️ Using [xUnit.net][xUnit], the best unit testing tool of the .NET ecosystem. Still on xUnit.net v2 because [v3 is incompatible with Strkyer](https://github.com/stryker-mutator/stryker-net/issues/3117) and [TUnit](https://tunit.dev) has critical issues with JetBrains Rider, my IDE of choice:
+  * [RIDER-127224](https://youtrack.jetbrains.com/issue/RIDER-127224/Jump-to-source-with-TUnit-doesnt-work) Jump to source with TUnit doesn't work
+  * [DCVR-12871](https://youtrack.jetbrains.com/issue/DCVR-12871/Not-receiving-coverage-from-TUnit-Testing-Platform-tests-in-dotCover) Not receiving coverage from TUnit (Testing Platform) tests in dotCover
 * ⚙️ Public API snapshot with [Verify][Verify] for easy review of your public API evolution.
 
 ### GitHub Actions workflow
 
 The ***Continuous Integration*** workflow runs everytime a commit is pushed to the GitHub repository.
 
-The ***Test Report*** workflow runs after ***Continuous Integration*** in order to produce a comprehensive test report dashboard with the summary of all tests.
-
 A package (nupkg file) is always produced and available in the action artifacts. When the commit has an attached tag, which is required when using [MinVer][MinVer], the package is published on NuGet.
 
-### The `package` job
+### 🛠 The `package` job
 
 The package job runs on Linux + macOS + Windows. This ensures the code is truly cross platform. `fail-fast` is set to`false` so that if an error occurs one one platform, other platforms continue to run the job.
 
 This job builds the NuGet package and runs the unit tests.
 
-The `checks: write` permission is granted for the [Test Reporter][TestReporter] to work properly with pull requests.
-
 The following steps are performed.
 
-* Chekout the git repository, with `fetch-depth: 0` so that MinVer can version pre-release versions correctly.
-* Install the .NET SDK. No parameters are specified so that the SDK version from the `global.json` file is used. And since `latestFeature` is used as the roll forward policy, the [dotnet-install-script](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script) is executed with `--channel` and the two-part version in A.B format.
-* Taking advantage of the `packages.lock.json` file, NuGet package dependencies are retrived from a [cache](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows). If the packages are not in the cache anymore, they will be retrieved from nuget.org during the restore step.
-* `dotnet restore` to restore the NuGet package dependencies.
-* `dotnet build --no-restore` to build the solution (class library + tests).
-* `dotnet test --no-build`  to run the tests.
-* If the tests fail, all `**/*.received.*` files (produced by [Verify][Verify]) are uploaded as artifacts so that the can be analyzed.
-* The test results hmtl report is always uploaded as an artifact.
-* The [Test Reporter][TestReporter] action is run to make test results summary available directly on the action run.
-* Code coverage results are uploaded to [Codecov][Codecov]. This requires to login to Codecov and setup the repositry first.
-* If the `CODACY_PROJECT_TOKEN` secret is defined in the repositry, code coverage results are also uplaoded to [Codacy][Codacy].
-* `dotnet pack --no-build` is run to produce the NuGet package.
-* The produced NuGet package is uploaded as an artifact.
-* If the `STRYKER_DASHBOARD_API_KEY` secret is defined in the repositry, mutation testing is performed with [Stryker][Stryker] and the mutation results are uploaded to the Stryker dashboard.
-* If a tag exists on the commit, release notes are extracted from the tag and a *Release Notes* artifact is uploaded.
+* 🧑‍💻 Chekout the git repository, with `fetch-depth: 0` so that MinVer can version pre-release versions correctly.
+* 🏎 Optimize the Windows runner because it's slow. See the [extremely slow Network/Disk IO on Windows agent compared to Ubuntu/Mac issue](https://github.com/actions/setup-dotnet/issues/260) on GitHub.
+* 🧑‍🔧 Install the .NET SDK. No parameters are specified so that the SDK version from the `global.json` file is used. And since `latestFeature` is used as the roll forward policy, the [dotnet-install-script](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script) is executed with `--channel` and the two-part version in A.B format.
+* ℹ️ Display the result of `dotnet --info` because it's useful to have these technical details if anything goes wrong.
+* 💾 Taking advantage of the `packages.lock.json` file, NuGet package dependencies are retrived from a [cache](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows). If the packages are not in the cache anymore, they will be retrieved from nuget.org during the restore step.
+* ⚙️ `dotnet restore` to restore the NuGet package dependencies.
+* 🏗 `dotnet build --no-restore` to build the solution (class library + tests).
+* 🧪 `dotnet test --no-build`  to run the tests.
+* 📤 If the tests fail, all `**/*.received.*` files (produced by [Verify][Verify]) are uploaded as artifacts so that the can be analyzed. The trx file is always uploaded as an artifact, too.
+* 📊 The [Test Reporter][TestReporter] action is run to make test results summary available directly on the action run. Another option could be to use the [dotnet-trx][dotnet-trx] tool which serves a similar purpose.
+* ☂️ Code coverage results are uploaded to [Codecov][Codecov]. This requires to login to Codecov and setup the repositry first.
+* ☂️ If the `CODACY_PROJECT_TOKEN` secret is defined in the repositry, code coverage results are also uplaoded to [Codacy][Codacy].
+* 📦 `dotnet pack --no-build` is run to produce the NuGet package.
+* 📤 The produced NuGet package is uploaded as an artifact.
+* 👽 If the `STRYKER_DASHBOARD_API_KEY` secret is defined in the repositry, mutation testing is performed with [Stryker][Stryker] and the mutation results are uploaded to the Stryker dashboard.
+* 📝 If a tag exists on the commit, release notes are extracted from the tag and a *Release Notes* artifact is uploaded.
 
-### The `publish` job
+### 🐿 The `publish` job
 
 When a tag is attached to the commit, the following steps are performed.
 
-* The release notes artifact from the `package` job is downloaded and a GitHub release is created.
-* The nupkg artifact from the `package` job is downloaded and pushed to NuGet. This requires the `NUGET_API_KEY` secret to be defined in the repository.
+* 🚢 The release notes artifact from the `package` job is downloaded and a GitHub release is created.
+* 🔑 A NuGet API key is retrieved using [Trusted Publishing](https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing). This requires *Trusted Publishing* to be configured in your NuGet account.
+* 🚀 Finally, the nupkg artifact from the `package` job is published on NuGet.
 
 ### Miscellaneous
 
@@ -149,6 +149,7 @@ This template provides the following features.
 [xUnit]: https://xunit.net
 [Verify]: https://github.com/VerifyTests/Verify
 [TestReporter]: https://github.com/dorny/test-reporter
+[dotnet-trx]: https://github.com/devlooped/dotnet-trx
 [Codecov]: https://codecov.io
 [Codacy]: https://www.codacy.com
 [Stryker]: https://stryker-mutator.io
