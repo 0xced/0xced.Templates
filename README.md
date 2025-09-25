@@ -54,10 +54,7 @@ dotnet new nuget-classlib
 * 👩‍🔬 Code coverage with [coverlet][coverlet].
   * Running `dotnet test` automatically runs coverage, displays a summary on your terminal, generates an html report with [ReportGenerator][ReportGenerator] and opens it in your browser.
   * Deterministic report paths, working around [microsoft/vstest/#2378][VsTestIssue2378] (Avoid guid at the end of outputDirectory).
-  * [GitHub Actions Test Logger][GitHubActionsTestLogger] is integrated when running the tests on GitHub Actions.
-  
 * ⚔️ Using [xUnit.net][xUnit], the best unit testing tool of the .NET ecosystem.
-  
 * ⚙️ Public API snapshot with [Verify][Verify] for easy review of your public API evolution.
 
 ### GitHub Actions workflow
@@ -149,7 +146,6 @@ This template provides the following features.
 [coverlet]: https://github.com/coverlet-coverage/coverlet
 [ReportGenerator]: https://reportgenerator.io
 [VsTestIssue2378]: https://github.com/microsoft/vstest/issues/2378
-[GitHubActionsTestLogger]: https://github.com/Tyrrrz/GitHubActionsTestLogger
 [xUnit]: https://xunit.net
 [Verify]: https://github.com/VerifyTests/Verify
 [TestReporter]: https://github.com/dorny/test-reporter
