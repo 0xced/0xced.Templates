@@ -21,7 +21,6 @@ app.Configure(config =>
     var version = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? assembly.GetName().Version?.ToString() ?? "N/A";
     config.SetApplicationVersion(version);
     config.ConfigureConsole(RedirectionFriendlyConsole.Out);
-    config.Settings.Registrar.RegisterInstance(cancellationTokenSource.Token);
     config.SetExceptionHandler((exception, _) =>
     {
         switch (exception)
@@ -49,4 +48,4 @@ app.Configure(config =>
     });
 });
 
-return await app.RunAsync(args);
+return await app.RunAsync(args, cancellationTokenSource.Token);

@@ -10,7 +10,7 @@ namespace myapp;
 
 [Description("Waits for some time.")]
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global", Justification = "Instantiated by Spectre.Console.Cli through reflection")]
-internal class DefaultCommand(IAnsiConsole console, CancellationToken cancellationToken) : CancelableCommand<DefaultCommand.Settings>(cancellationToken)
+internal class DefaultCommand(IAnsiConsole console) : AsyncCommand<DefaultCommand.Settings>
 {
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global", Justification = "Required for Spectre.Console.Cli binding")]
     internal class Settings : CommandSettings
@@ -21,7 +21,7 @@ internal class DefaultCommand(IAnsiConsole console, CancellationToken cancellati
         public TimeSpan Delay { get; init; }
     }
 
-    protected override async Task<int> ExecuteAsync(CommandContext commandContext, Settings settings, CancellationToken cancellationToken)
+    public override async Task<int> ExecuteAsync(CommandContext commandContext, Settings settings, CancellationToken cancellationToken)
     {
         return await console.Status().Spinner(Spinner.Known.Clock).StartAsync("Waiting", async context =>
         {
