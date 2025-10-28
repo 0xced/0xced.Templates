@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json.schemastore.org/template",
+    "$schema": "https://json.schemastore.org/template.json",
     "identity": "ch.0xced.nuget-classlib",
     "author": "Cédric Luthi",
     "classifications": [
@@ -42,6 +42,13 @@
             "description": "A space-delimited list of tags and keywords that describe the NuGet package.",
             "replaces": "package-tags",
             "isRequired": true
+        },
+        "package-owner": {
+            "type": "parameter",
+            "datatype": "text",
+            "description": "The NuGet user name used for Trusted Publishing.",
+            "replaces": "package-owner",
+            "defaultValue": "0xced"
         },
         "github-organization": {
             "type": "parameter",
