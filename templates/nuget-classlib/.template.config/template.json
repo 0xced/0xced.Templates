@@ -28,12 +28,6 @@
             ]
         }
     ],
-    "guids": [
-        "6F2C5EC9-0D5E-4D36-BC56-450FBD08D8DB",
-        "75D6D6DB-72E8-4A14-A9BA-779EB8171FEC",
-        "862A2B67-8CE8-4955-BAC7-CC43BFA5A8F4",
-        "FAB1CDC0-266C-4E9B-BD8B-396EE5903FB0"
-    ],
     "symbols": {
         "package-description": {
             "type": "parameter",
