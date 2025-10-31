@@ -26,7 +26,7 @@ app.Configure(config =>
         switch (exception)
         {
             case OperationCanceledException when cancellationTokenSource.IsCancellationRequested:
-                return 130; // https://github.com/spectreconsole/spectre.console/issues/701#issuecomment-2342979700
+                return config.Settings.CancellationExitCode;
             case CommandAppException { Pretty: not null } commandAppException:
                 RedirectionFriendlyConsole.Error.Write(commandAppException.Pretty);
                 break;
