@@ -1,6 +1,4 @@
 *.user
-bin/
-obj/
-coverage/
+artifacts/
 .idea/
 .vs/

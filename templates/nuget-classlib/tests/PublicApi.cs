@@ -18,21 +18,21 @@ public class PublicApi
     public Task ApprovePublicApi(string targetFramework)
     {
         var testAssembly = typeof(PublicApi).Assembly;
-        var configuration = testAssembly.GetCustomAttribute<AssemblyConfigurationAttribute>()?.Configuration
+        var configuration = testAssembly.GetCustomAttribute<AssemblyConfigurationAttribute>()?.Configuration.ToLowerInvariant()
                             ?? throw new Exception($"{nameof(AssemblyConfigurationAttribute)} not found in {testAssembly.Location}");
-        var assemblyPath = Path.Combine(GetSrcDirectoryPath(), "bin", configuration, targetFramework, "MyLibrary.dll");
+        var assemblyPath = Path.Combine(GetRootDirectoryPath(), "artifacts", "bin", "MyLibrary", configuration, "MyLibrary.dll");
         var assembly = Assembly.LoadFile(assemblyPath);
         var publicApi = assembly.GeneratePublicApi();
         return Verifier.Verify(publicApi, "cs").UseFileName($"PublicApi.{targetFramework}");
     }
 
-    private static string GetSrcDirectoryPath([CallerFilePath] string path = "") => Path.Combine(Path.GetDirectoryName(path)!, "..", "src");
+    private static string GetRootDirectoryPath([CallerFilePath] string path = "") => Path.Combine(Path.GetDirectoryName(path)!, "..");
 
     private class TargetFrameworksTheoryData : TheoryData<string>
     {
         public TargetFrameworksTheoryData()
         {
-            var csprojPath = Path.Combine(GetSrcDirectoryPath(), "MyLibrary.csproj");
+            var csprojPath = Path.Combine(GetRootDirectoryPath(), "src", "MyLibrary.csproj");
             var project = XDocument.Load(csprojPath);
             var targetFrameworks = project.XPathSelectElement("/Project/PropertyGroup/TargetFrameworks")?.Value.Split(';', StringSplitOptions.RemoveEmptyEntries)
                                    ?? [project.XPathSelectElement("/Project/PropertyGroup/TargetFramework")?.Value ?? throw new Exception($"TargetFramework(s) element not found in {csprojPath}")];
