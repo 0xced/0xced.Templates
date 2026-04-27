@@ -67,7 +67,9 @@
 
   <Target Name="ValidateNuGetPackage" AfterTargets="Pack">
     <Exec Command="dotnet tool restore" />
+<!--/-:msbuild-conditional:noEmit -->
     <Exec Command="dotnet validate package local %(NuGetPackOutput.FullPath)" Condition="'%(Extension)' == '.nupkg'" />
+<!--/+:msbuild-conditional:noEmit -->
   </Target>
 
 </Project>
