@@ -70,6 +70,12 @@ jobs:
           name: 🚦 Test Results
           path: artifacts/test-results/*/*.trx
           reporter: dotnet-trx
+      - name: 📤 Upload coverage report
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v7
+        with:
+          name: Coverage Report
+          path: artifacts/coverage
       - name: ☂️ Upload coverage report to Codecov
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
