@@ -1,6 +1,5 @@
 ﻿using myapp;
 using System;
-using System.Reflection;
 using System.Threading;
 using Spectre.Console;
 using Spectre.Console.Cli;
@@ -17,9 +16,7 @@ Console.CancelKeyPress += (_, eventArgs) =>
 
 app.Configure(config =>
 {
-    var assembly = typeof(Program).Assembly;
-    var version = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? assembly.GetName().Version?.ToString() ?? "N/A";
-    config.SetApplicationVersion(version);
+    config.UseAssemblyInformationalVersion();
     config.ConfigureConsole(RedirectionFriendlyConsole.Out);
     config.SetExceptionHandler((exception, _) =>
     {
