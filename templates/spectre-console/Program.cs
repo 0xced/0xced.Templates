@@ -17,6 +17,7 @@ Console.CancelKeyPress += (_, eventArgs) =>
 app.Configure(config =>
 {
     config.UseAssemblyInformationalVersion();
+    config.UseStrictParsing();
     config.ConfigureConsole(RedirectionFriendlyConsole.Out);
     config.SetExceptionHandler((exception, _) =>
     {
